@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "python-tool-competition-2024-crosshair"
+version = "0.1.0"
+description = "Python Tool Competition 2024 implementation using CrossHair"
+authors = ["Phillip Schanely <pschanely@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+python-tool-competition-2024 = "^0.2.0"
+crosshair-tool = "^0.0.45"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.plugins."python_tool_competition_2024.test_generators"]
+crosshair = "python_tool_competition_2024_crosshair.generator:CrosshairTestGenerator"
