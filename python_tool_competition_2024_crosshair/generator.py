@@ -1,4 +1,5 @@
 """A test generator using CrossHair."""
+import python_tool_competition_2024_crosshair.codegen_substitute
 
 from io import StringIO
 import traceback
