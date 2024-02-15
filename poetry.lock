@@ -1134,8 +1134,7 @@ description = "Pipeline to create test generators"
 optional = false
 python-versions = ">=3.9,<4.0"
 files = [
-    {file = "python_tool_competition_2024-0.2.0-py3-none-any.whl", hash = "sha256:bc85f484a6d793854e68e139ae9c542177729aa3f9a1799e5df51bf2c26b0857"},
-    {file = "python_tool_competition_2024-0.2.0.tar.gz", hash = "sha256:c15bb0fad01557d2c1c00239a1c00e6241ae2a99ee59f89fddc938561ad4b426"},
+    {file = "python_tool_competition_2024-0.2.0-py3-none-any.whl", hash = "sha256:383d82d4ea8b4f7279cf3daf1e7930055b4ddbaa39d66cdbc2db050577f42137"},
 ]
 
 [package.dependencies]
@@ -1149,6 +1148,10 @@ pytest-cov = ">=4.1.0,<5.0.0"
 rich = ">=13.4.2,<14.0.0"
 toml = ">=0.10.2,<0.11.0"
 typing-extensions = ">=4.7.1,<5.0.0"
+
+[package.source]
+type = "url"
+url = "https://github.com/tochilinak/python-tool-competition-2024/releases/download/v0/python_tool_competition_2024-0.2.0-py3-none-any.whl"
 
 [[package]]
 name = "pyyaml"
@@ -1599,4 +1602,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.9"
-content-hash = "ef279550355fd58006417f27c280204d6d1eadb4db2be3aaba02ff4a70135c2f"
+content-hash = "2d84e6b16afd0e88f04a79e1bdd449a8c6c89c07cb41308c03e13ebd60b11bf2"

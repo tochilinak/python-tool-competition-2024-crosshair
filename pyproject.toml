@@ -8,7 +8,9 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.9"
-python-tool-competition-2024 = "^0.2.0"
+python-tool-competition-2024 = [
+    { url = "https://github.com/tochilinak/python-tool-competition-2024/releases/download/v0/python_tool_competition_2024-0.2.0-py3-none-any.whl" }
+]
 crosshair-tool = "^0.0.45"
 
 [build-system]
