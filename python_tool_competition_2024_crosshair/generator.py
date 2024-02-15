@@ -36,6 +36,8 @@ class CrosshairTestGenerator(TestGenerator):
                 "cover",
                 "--coverage_type=path",
                 "--example_output_format=PYTEST",
+                "--max_uninteresting_iterations=180",
+                "--per_path_timeout=1",
                 str(target_file_info.absolute_path),
             ])
             options = DEFAULT_OPTIONS.overlay(AnalysisOptionSet(
