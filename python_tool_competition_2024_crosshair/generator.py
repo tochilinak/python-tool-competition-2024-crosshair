@@ -2,6 +2,8 @@
 import python_tool_competition_2024_crosshair.codegen_substitute
 
 from io import StringIO
+import sys
+import time
 import traceback
 from python_tool_competition_2024.generation_results import (
     FailureReason,
@@ -12,6 +14,10 @@ from python_tool_competition_2024.generation_results import (
 from python_tool_competition_2024.generators import FileInfo, TestGenerator
 from crosshair.main import cover, command_line_parser
 from crosshair.options import DEFAULT_OPTIONS, AnalysisOptionSet
+from crosshair.util import set_debug
+
+
+GENERATION_TIMES: list[float] = []
 
 
 class CrosshairTestGenerator(TestGenerator):
@@ -30,27 +36,39 @@ class CrosshairTestGenerator(TestGenerator):
         """
 
         retcode = 0
+        print("Working on", target_file_info.module_name)
         try:
             stdout, stderr = StringIO(), StringIO()
             args = command_line_parser().parse_args([
                 "cover",
+                "--verbose",
                 "--coverage_type=path",
                 "--example_output_format=PYTEST",
-                "--max_uninteresting_iterations=180",
-                "--per_path_timeout=1",
-                str(target_file_info.absolute_path),
+                str(target_file_info.module_name),
             ])
             options = DEFAULT_OPTIONS.overlay(AnalysisOptionSet(
-                per_condition_timeout=60,
-                max_uninteresting_iterations=50,
+                max_uninteresting_iterations=10,
+                max_iterations=10,
+                per_path_timeout=2,
             ))
+            set_debug(False)
+            sys.path.append(str(target_file_info.config.targets_dir))
+            start = time.time()
             retcode = cover(args, options, stdout, stderr)
+            cur_time = time.time() - start
+            GENERATION_TIMES.append(cur_time)
+            print("Process finished in", cur_time)
+            print("Mean time:", sum(GENERATION_TIMES) / len(GENERATION_TIMES))
+            print("Max time:", max(GENERATION_TIMES))
+
         except Exception as exc:
             traceback.print_exc()
             return TestGenerationFailure((exc,), FailureReason.UNEXPECTED_ERROR)
         if retcode == 0:
             test_body = stdout.getvalue()
             if test_body:
+                #print("Generated!")
+                #print(test_body)
                 return TestGenerationSuccess(test_body)
             else:
                 return TestGenerationFailure(("CrossHair did not generate any tests",), FailureReason.NOTHING_GENERATED)

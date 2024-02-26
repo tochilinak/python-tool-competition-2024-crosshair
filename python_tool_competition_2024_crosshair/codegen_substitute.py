@@ -34,3 +34,15 @@ def output_pytest_paths(
 import crosshair.path_cover
 
 crosshair.path_cover.output_pytest_paths = output_pytest_paths
+
+from crosshair.statespace import StateSpace
+
+old_init = StateSpace.__init__
+
+def new_init(self, *args, **kwargs):
+    old_init(self, *args, **kwargs)
+    self.solver.set("timeout", 1)
+
+import crosshair.statespace
+
+crosshair.statespace.StateSpace.__init__ = new_init
