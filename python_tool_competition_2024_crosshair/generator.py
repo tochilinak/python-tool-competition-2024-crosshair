@@ -1,5 +1,7 @@
 """A test generator using CrossHair."""
 import python_tool_competition_2024_crosshair.codegen_substitute
+#import python_tool_competition_2024_crosshair.solver_substitute
+import python_tool_competition_2024_crosshair.cover_substitute
 
 from io import StringIO
 import sys
@@ -48,8 +50,9 @@ class CrosshairTestGenerator(TestGenerator):
             ])
             options = DEFAULT_OPTIONS.overlay(AnalysisOptionSet(
                 max_uninteresting_iterations=10,
-                max_iterations=10,
-                per_path_timeout=2,
+                # max_iterations=10,
+                per_path_timeout=2.0,
+                per_condition_timeout=10.0
             ))
             set_debug(False)
             sys.path.append(str(target_file_info.config.targets_dir))
