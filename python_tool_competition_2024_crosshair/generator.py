@@ -49,10 +49,10 @@ class CrosshairTestGenerator(TestGenerator):
                 str(target_file_info.module_name),
             ])
             options = DEFAULT_OPTIONS.overlay(AnalysisOptionSet(
-                max_uninteresting_iterations=10,
+                max_uninteresting_iterations=50,
                 # max_iterations=10,
                 per_path_timeout=2.0,
-                per_condition_timeout=10.0
+                per_condition_timeout=240.0
             ))
             set_debug(False)
             sys.path.append(str(target_file_info.config.targets_dir))
