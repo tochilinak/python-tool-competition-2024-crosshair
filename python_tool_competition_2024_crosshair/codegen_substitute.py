@@ -1,4 +1,5 @@
 from crosshair.path_cover import *
+import ast
 
 
 def output_pytest_paths(
@@ -13,19 +14,25 @@ def output_pytest_paths(
     for idx, path in enumerate(paths):
         test_name_suffix = "" if idx == 0 else "_" + str(idx + 1)
         exec_fn = f"{fn_name}({path.formatted_args})"
-        lines.append(f"def test_{name_with_underscores}{test_name_suffix}():")
+        cur_lines = []
+        cur_lines.append(f"def test_{name_with_underscores}{test_name_suffix}():")
         if path.exc is None:
-            lines.append(f"    {exec_fn}")
+            cur_lines.append(f"    {exec_fn}")
         else:
             imports.add("import pytest")
             if path.exc_message is not None:
-                lines.append(
+                cur_lines.append(
                     f"    with pytest.raises({name_of_type(path.exc)}):"
                 )
             else:
-                lines.append(f"    with pytest.raises({name_of_type(path.exc)}):")
-            lines.append(f"        {exec_fn}")
-        lines.append("")
+                cur_lines.append(f"    with pytest.raises({name_of_type(path.exc)}):")
+            cur_lines.append(f"        {exec_fn}")
+        cur_lines.append("")
+        try:
+            ast.parse("\n".join(cur_lines))
+            lines += cur_lines
+        except SyntaxError:
+            None
         references |= path.references
     imports |= import_statements_for_references(references)
     return (imports, lines)
